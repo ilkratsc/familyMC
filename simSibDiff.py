@@ -119,8 +119,6 @@ def assort(y1, y2, rho, rng):
         order2 = np.arange(len(y2))
         order2 = order2[y2.argsort()]
         order2 = order2[new_y2.argsort()]
-        #corr = np.corrcoef(y1,y2[order2])[0,1]
-        #logger.info(f"{corr=}")
 
     return order1, order2
 
@@ -161,16 +159,13 @@ def main(k, indir, nchild, nfam, batch, ngen, nsim, nvar, ncvar, AM, rho, outdir
     ## total number of variants in dataset
     p=len(vcf)
     ## check that genetic map matches chromsome and positions in vcf file
-    #if np.sum(np.isin(np.unique(chrs), np.unique(map.iloc[:,0]))==False) > 0:
     if np.sum(np.isin(np.unique(chrs), np.unique(map.iloc[:,1]))==False) > 0:
         # this means that (parts of) the vcf file is not contained in the genetic map
         logger.info("Error: Genetic map does not contain same chromosome as vcf file.")
         return
-    #if np.min(pos) < np.min(map.iloc[:,1]):
     if np.min(pos) < np.min(map.iloc[:,0]):
         logger.info(f"Error: Genetic map does not cover the positions in the vcf file: {np.min(pos)=}, {np.min(map.iloc[:,1])=}.")
         return
-    #if np.max(pos) > np.max(map.iloc[:,1]):
     if np.max(pos) > np.max(map.iloc[:,0]):
         logger.info(f"Error: Genetic map does not cover the positions in the vcf file: {np.max(pos)=}, {np.max(map.iloc[:,1])=}.")
         return
@@ -179,7 +174,6 @@ def main(k, indir, nchild, nfam, batch, ngen, nsim, nvar, ncvar, AM, rho, outdir
 
     # linear interpolation between map.cm and map.bp evaluated at pos from vcf file
     map_cm = np.interp(pos, map.iloc[:p,0], map.iloc[:p,2])
-    #logger.info(f"{map_cm=}")
     logger.info(f"Analysing {nfam} families with {nchild} offspring for {p} variants; {n} total individuals per generation")
 
     ## effect size
@@ -252,7 +246,6 @@ def main(k, indir, nchild, nfam, batch, ngen, nsim, nvar, ncvar, AM, rho, outdir
                 # mate parents to create nchild offspring
                 for j in range(nchild):
                     id = 2*i+j
-                    #logger.info(f"{i=}, {id=}")
                     c_gt1[id], c_gt2[id], swap = mate(m_gt1[i], m_gt2[i], f_gt1[i], f_gt2[i], map_cm, rng) 
                     # keep track of haplotypes being swapped for imprinting
                     if swap:
@@ -355,8 +348,6 @@ def main(k, indir, nchild, nfam, batch, ngen, nsim, nvar, ncvar, AM, rho, outdir
                     for j in range(i):
                         # use child 1
                         theor_var[g, 2] += 2*np.corrcoef(c_gt[0::nchild,m[i]], c_gt[0::nchild,m[j]])[0,1]*np.sqrt(var_loci[i])*np.sqrt(var_loci[j])
-                        # add sibling effect
-                        #theor_var[g, 2] += 2*np.corrcoef(c_gt[1::nchild,m[i]], c_gt[1::nchild,m[j]])[0,1]*np.sqrt(var_loci[i])*np.sqrt(var_loci[j])
                 ## total
                 theor_var[g,0] = theor_var[g,1] + theor_var[g,2] 
             ## assortative mating
@@ -379,8 +370,6 @@ def main(k, indir, nchild, nfam, batch, ngen, nsim, nvar, ncvar, AM, rho, outdir
                     for j in range(i):
                         # use both children for correlation
                         theor_var[g, 5] += 2*np.corrcoef(c_gt[0::nchild,m[i]], c_gt[0::nchild,m[j]])[0,1]*np.sqrt(var_loci_tot[i])*np.sqrt(var_loci_tot[j])
-                        # add sibling effect
-                        #theor_var[g, 5] += 2*np.corrcoef(c_gt[1::nchild,m[i]], c_gt[1::nchild,m[j]])[0,1]*np.sqrt(var_loci_tot[i])*np.sqrt(var_loci_tot[j])
                 # total
                 theor_var[g,3] = theor_var[g,4] + theor_var[g,5]
             logger.info(f"--------- Mean and variance ---------")   
