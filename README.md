@@ -21,10 +21,22 @@ git clone https://github.com/medical-genomics-group/familyMC
 ```
 
 ## 3. Run code
+The code is run in two steps: <break>
+a.) The haplotypes and genotypes of the first generation parents are produced based on randomly selected variants of chromosome 4. This part of the code is based on https://github.com/adimitromanolakis/sim1000G. The data of chromosome 4 is taken from the 1000 genomes project (\url{http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/}) using vcfrandomsample (\url{https://github.com/vcflib/vcflib#vcflib}) to downsample the data to make it more manageable. <break>
+b.) Children are produced based on the first generation parents. The simulation is moved forward through generations keeping the number of individuals constant. Assortative mating can be introduced in this step. The foucs in this step can either be on calculating population mean and variance of child-mother-father trios or of differences in sibling pairs.
 
 ### a.) generate first generation parents:
-The haplotypes of the parents are generated based on randomly selected variants of chr4. This part of the code is based on https://github.com/adimitromanolakis/sim1000G.
-genParents.py
+genParents.py:
+Possible input parameters:
+```
+--nfam          number of families per batch (default=1000)
+--ngen          number of generations (default=10)
+--nsim          number of simulations (default=10)
+--nvar          number of variants, randomly sampled from chr4 subset (default=100)
+--outdir        path to output directory (required)
+--randomdata    default=False; switch to true if haplotypes should be generated from a binomial with prob=0.5 instead of LD from chr4
+```
+
 
 ### b.) forward in time simulation either with trios or sibling pairs
 simFamilies.py
