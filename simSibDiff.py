@@ -131,11 +131,11 @@ def main(k, indir, nchild, nfam, batch, ngen, nsim, nvar, ncvar, AM, rho, outdir
     ## CHANGE HERE IF NEEDED
     # create child genetic effects
     # direct, maternal, paternal, imprinting, sibling
-    V_true = np.array([[0.2,0.0,0.0,0.0,0.0],
-                    [0.0,0.2,0.0,0.0,0.0],
-                    [0.0,0.0,0.2,0.0,0.0],
-                    [0.0,0.0,0.0,0.0,0.2],
-                    [0.0,0.0,0.0,0.0,0.2]])
+    V_true = np.array([[0.5,0.0,0.0,0.0,0.0],
+                    [0.0,0.1,0.0,0.0,0.0],
+                    [0.0,0.0,0.1,0.0,0.0],
+                    [0.0,0.0,0.0,0.1,0.],
+                    [0.0,0.0,0.0,0.0,0.1]])
     
     ## read genetic map from file
     # pos  chr cM
