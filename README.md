@@ -71,14 +71,12 @@ Output for saveX==True:
 
 Output for saveStats==True:
 
-Setting saveStats==True produces
 - the estimated population-level mean and variances for trios or sibling differences,
 - estimated correlations between the effects,
 - estimated genotypic and phenotypic correlations between parents,
 - estimated mating frequencies, minor allele frequencies and genotype frequencies, as well as
 - theoretical population-level mean and variances for trios or sibling differences, and
-- theoretical genotype frequencies calculated with the estimated phenotypic and genotypic correlation <br/>
-for all generations.
+- theoretical genotype frequencies calculated with the estimated phenotypic and genotypic correlation
 
 The header of each file should give more detailed information about the columns.
 
