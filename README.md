@@ -61,6 +61,7 @@ Possible input parameters:
 ```
 
 Output for saveX==True:
+
 - true_betas.txt: True effects which are kept constant across generations
 - true_V.txt: True covariance matrix between effects
 - y_childX_genX.txt: phenotype of child 1 and 2 for the first and last generation. This file contains five columns with the total phenotype, the direct component, the maternal, the paternal and the parent-of-origin one.
@@ -69,6 +70,7 @@ Output for saveX==True:
 - genotype_diff_genX.zarr: genotype matrix for the sibling difference where each loci has two columns: genotypic difference between the siblings, parent-of-origin information. This file is only produced in simSibDiff.py.
 
 Output for saveStats==True:
+
 Setting saveStats==True produces
 - the estimated population-level mean and variances for trios or sibling differences,
 - estimated correlations between the effects,
