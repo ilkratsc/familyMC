@@ -37,7 +37,7 @@ Possible input parameters:
 --randomdata    default=False; switch to true if haplotypes should be generated from a binomial with prob=0.5 instead of LD from chr4
 ```
 
-Output of this step are the haplotypes of mother and father (which can be used interchangeably as there is no difference due to sex) in zarr format.
+Output of this step are the haplotypes of mother and father (which can be used interchangeably as there is no difference due to sex) in zarr format, and a csv file of the selected loci from the vcf file.
 
 ### b.) Forward-in-time simulation either with trios (simFamilies.py) or sibling pairs (simSibDiff.py):
 The input parameters set in step a.) need to match the ones in this step.
