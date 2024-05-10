@@ -71,7 +71,7 @@ Output for saveX==True:
 
 Output for saveStats==True:
 
-- the estimated population-level mean and variances for trios or sibling differences,
+- estimated population-level mean and variances for trios or sibling differences,
 - estimated correlations between the effects,
 - estimated genotypic and phenotypic correlations between parents,
 - estimated mating frequencies, minor allele frequencies and genotype frequencies, as well as
