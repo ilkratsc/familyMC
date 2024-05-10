@@ -41,7 +41,7 @@ Output of this step are the haplotypes of mother and father (which can be used i
 
 ### b.) Forward-in-time simulation either with trios (simFamilies.py) or sibling pairs (simSibDiff.py):
 The input parameters set in step a.) need to match the ones in this step.
-The variance of the effects V_true has to be changed within each script, if other values are needed. Currently, the values are set to diag(V_true) = (0.5, 0.1, 0.1, 0.1, 0.1).
+The variance of the effects V_true has to be changed within each script, if other values are needed. For trios, direct, maternal, paternal and parent-of-origin effects can be set, while for sibling pairs, there is an additional sibling effect. Currently, the values are set to diag(V_true) = (0.5, 0.1, 0.1, 0.1, (0.1)).
 
 Possible input parameters:
 ```
