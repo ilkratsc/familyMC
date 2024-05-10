@@ -20,11 +20,10 @@ git clone https://github.com/medical-genomics-group/familyMC
 
 ## 3. Run code
 The code is run in two steps: <br/>
-a.) The haplotypes and genotypes of the first generation parents are produced based on randomly selected variants of chromosome 4. This part of the code is based on https://github.com/adimitromanolakis/sim1000G. The data of chromosome 4 is taken from the 1000 genomes project (\url{http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/}) using vcfrandomsample (\url{https://github.com/vcflib/vcflib#vcflib}) to downsample the data to make it more manageable. <br/>
+a.) The haplotypes and genotypes of the first generation parents are produced based on randomly selected variants of chromosome 4. This part of the code is based on https://github.com/adimitromanolakis/sim1000G. The data of chromosome 4 is taken from the 1000 genomes project (http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/) using vcfrandomsample (https://github.com/vcflib/vcflib#vcflib) to downsample the data to make it more manageable. <br/>
 b.) Children are produced based on the first generation parents using a genetic map. The simulation is moved forward through generations keeping the number of individuals constant. Assortative mating can be introduced in this step. The foucs in this step can either be on calculating population mean and variance of child-mother-father trios or of differences in sibling pairs.
 
 At the beginning of each script, instructions on how to run the code and input parameters can be found.
-
 
 ### a.) Generate first generation parents with genParents.py:
 
@@ -38,9 +37,11 @@ Possible input parameters:
 --randomdata    default=False; switch to true if haplotypes should be generated from a binomial with prob=0.5 instead of LD from chr4
 ```
 
+Output of this step are the haplotypes of mother and father (which can be used interchangeably as there is no difference due to sex) in zarr format.
 
 ### b.) Forward-in-time simulation either with trios (simFamilies.py) or sibling pairs (simSibDiff.py):
-The variance of the effects V_true has to be changed within each script, if other values are needed.
+The input parameters set in step a.) need to match the ones in this step.
+The variance of the effects V_true has to be changed within each script, if other values are needed. Currently, the values are set to diag(V_true) = (0.5, 0.1, 0.1, 0.1, 0.1).
 
 Possible input parameters:
 ```
@@ -59,4 +60,11 @@ Possible input parameters:
 --saveX         save genotypes and phenotypes for first and last generation (default=False)
 ```
 
-## 4. Output
+Output for saveX==True:
+- true_betas.txt: True effects which are kept constant across generations
+- true_V.txt: True covariance matrix between effects
+- y_childX_genX.txt: phenotype of child 1 and 2 for the first and last generation. This file contains five columns with the total phenotype, the direct component, the maternal, the paternal and the parent-of-origin one.
+- genotype_childX_genX.zarr: the genotype matrix of child 1 and 2 for the first and the last generation. The genotype matrix is ordered so that each loci has four columns: child's genotype, maternal genotype, paternal genotype, parent-of-origin information. The parent-of-origin information is coded as +1 for the maternalley inherited allele and -1 for the paternally inherited one for heterozygotes. The rest is set to 0.
+- y_diff_genX.txt: difference in total phenotypes between the siblings. This file is only produced in simSibDiff.py. 
+- genotype_diff_genX.zarr: genotype matrix for the sibling difference where each loci has two columns: genotypic difference between the siblings, parent-of-origin information. This file is only produced in simSibDiff.py.
+
